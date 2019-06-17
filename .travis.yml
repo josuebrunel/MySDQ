@@ -2,11 +2,11 @@ sudo: false
 language: python
 python:
     - '2.7'
-    - '3.5'
+    - '3.6'
 install:
     - pip install coverage coveralls
 script:
-    - python -m coverage run --source=Mysdq -m pytest -vs tests/
+    - python -m coverage run --source=mysdq -m pytest -vs tests/
 after_success:
     - python -m coverage report
     - coveralls
