@@ -129,8 +129,8 @@ class DictQuerer(object):
 
     def group_by(self, *args):
         result = defaultdict(list)
-        self.dataset.sort(key=operator.itemgetter(*args))
-        for key, group in itertools.groupby(self.dataset, operator.itemgetter(*args)):
+        res = sorted(self.dataset, key=operator.itemgetter(*args))
+        for key, group in itertools.groupby(res, operator.itemgetter(*args)):
             result[key].extend(list(group))
         return result
 
