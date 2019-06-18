@@ -111,3 +111,15 @@ def test_dictquerer_operator_icontains(data):
     qs = DictQuerer(data)
     res = qs.filter(address__city__icontains='paris')
     assert res.count() == 1
+
+
+def test_dictquerer_operator_startswith(data):
+    qs = DictQuerer(data)
+    res = qs.filter(nickname__startswith='j')
+    assert res.count() == 2
+
+
+def test_dictquerer_operator_endswith(data):
+    qs = DictQuerer(data)
+    res = qs.filter(nickname__endswith='g')
+    assert res.count() == 2

@@ -30,6 +30,12 @@ class Xoperator(object):
     def not_in(self, left, right):
         return left not in right
 
+    def startswith(self, left, right):
+        return left.startswith(right)
+
+    def endswith(self, left, right):
+        return left.endswith(right)
+
 
 class DictQuerer(object):
 
