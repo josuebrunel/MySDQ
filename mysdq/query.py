@@ -121,9 +121,11 @@ class DictQuerer(object):
             return True
         return False
 
-    def order_by(self, *args):
-        self.dataset.sort(key=operator.itemgetter(*args))
-        return self
+    def order_by(self, *args, **kwargs):
+        res = sorted(self.dataset, key=operator.itemgetter(*args))
+        if not kwargs.get('asc', True):
+            res = reversed(res)
+        return DictQuerer(list(res))
 
     def group_by(self, *args):
         result = defaultdict(list)

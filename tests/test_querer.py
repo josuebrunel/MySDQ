@@ -68,6 +68,8 @@ def test_query_orderby(data):
     res = qs.order_by('age')
     assert res.first()['nickname'] == 'tblack'
     assert res.last()['nickname'] == 'kyoung'
+    res = qs.order_by('age', asc=False)
+    assert res.first()['nickname'] == 'kyoung'
 
 
 def test_query_groupby(data):
