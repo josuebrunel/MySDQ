@@ -5,7 +5,7 @@ import subprocess
 __author__ = 'Josue Kouka'
 __username__ = 'josuebrunel'
 __email__ = 'josuebrunel@gmail.com'
-name = 'Mysdq'
+name = 'mysdq'
 
 version_py = os.path.join(os.path.dirname(__file__), 'version.py')
 
