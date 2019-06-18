@@ -57,7 +57,7 @@ class DictQuerer(object):
             if self._xoperator.isnum(keyname):
                 keyname = int(keyname)
             return self._lookup(datum[keyname], op, value)
-        if op not in self._xoperator.__dict__:
+        if not getattr(self._xoperator, op, None):
             if isinstance(datum, (list,)) and self._xoperator.isnum(keyname):
                 keyname = int(keyname)
             return self._lookup(datum[keyname], '%s__eq' % op, value)

@@ -1,6 +1,15 @@
 import pytest
 
 from mysdq import DictQuerer
+from mysdq.query import Xoperator
+
+
+def test_dictquerer():
+    data = [{'foo': 'bar'}]
+    qs = DictQuerer(data)
+    assert isinstance(qs._xoperator,  (Xoperator,)) is True
+    assert str(qs) == str(data)
+    assert repr(qs) == "<DictQuerer: [{'foo': 'bar'}] >"
 
 
 def test_query_count(data):
@@ -10,6 +19,7 @@ def test_query_count(data):
 
 def test_query_key(data):
     qs = DictQuerer(data)
+    assert qs.get(nickname='foo') is None
     yloking = qs.get(nickname='yloking')
     assert yloking['firstname'] == 'yosuke'
     assert yloking['lastname'] == 'loking'
@@ -37,6 +47,7 @@ def test_query_subkey(data):
 def test_query_deletion(data):
     qs = DictQuerer(data)
     assert qs.count() == 7
+    assert qs.delete(nickname='foo') is False
     qs.delete(address__zipcode="")
     assert qs.count() == 5
     qs.delete()
@@ -82,3 +93,21 @@ def test_query_apply(data):
     qs.apply(
             lambda x: x.update({'city': 'Paris', 'zipcode': '75008', 'country': 'France'}) or x, 'address')
     assert qs.filter(address__country='France').count() == 7
+
+
+def test_dictquerer_operator_in(data):
+    qs = DictQuerer(data)
+    res = qs.filter(age__in=[15, 24, 25])
+    assert res.count() == 4
+
+
+def test_dictquerer_operator_not_in(data):
+    qs = DictQuerer(data)
+    res = qs.filter(age__not_in=[15, 24, 25])
+    assert res.count() == 3
+
+
+def test_dictquerer_operator_icontains(data):
+    qs = DictQuerer(data)
+    res = qs.filter(address__city__icontains='paris')
+    assert res.count() == 1
