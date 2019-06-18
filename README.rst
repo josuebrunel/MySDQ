@@ -112,4 +112,4 @@ Data used in here can be found in `here <tests/users.json>`_
     {'age': 70, 'nickname': 'kyoung'}]
 
 
-That's pretty much it.
+That's pretty much it. For more filter attribute, just check the code :wink:.
