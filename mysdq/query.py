@@ -1,6 +1,7 @@
 from collections import defaultdict
 import itertools
 import operator
+import re
 
 
 class Xoperator(object):
@@ -35,6 +36,9 @@ class Xoperator(object):
 
     def endswith(self, left, right):
         return left.endswith(right)
+
+    def regex(self, string, pattern):
+        return re.search(pattern, string)
 
 
 class DictQuerer(object):

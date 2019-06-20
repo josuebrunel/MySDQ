@@ -125,3 +125,11 @@ def test_dictquerer_operator_endswith(data):
     qs = DictQuerer(data)
     res = qs.filter(nickname__endswith='g')
     assert res.count() == 2
+
+
+def test_dictquerer_operator_regex(data):
+    qs = DictQuerer(data)
+    res = qs.filter(address__name__regex=r'^rue.*')
+    assert res.count() == 2
+    res = qs.filter(address__name__regex=r'.*tchibimda')
+    assert res.count() == 1
