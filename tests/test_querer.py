@@ -133,3 +133,9 @@ def test_dictquerer_operator_regex(data):
     assert res.count() == 2
     res = qs.filter(address__name__regex=r'.*tchibimda')
     assert res.count() == 1
+
+
+def test_dictquerer_operator_iregex(data):
+    qs = DictQuerer(data)
+    res = qs.filter(address__city__iregex='.*noire$')
+    assert res.count() == 2

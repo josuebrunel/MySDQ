@@ -40,6 +40,9 @@ class Xoperator(object):
     def regex(self, string, pattern):
         return re.search(pattern, string)
 
+    def iregex(self, string, pattern):
+        return self.regex(string.lower(), pattern)
+
 
 class DictQuerer(object):
 
