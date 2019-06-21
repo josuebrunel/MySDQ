@@ -71,9 +71,17 @@ class DictQuerer(object):
                 keyname = int(keyname)
             return self._lookup(datum[keyname], op, value)
         if not getattr(self._xoperator, op, None):
+            # handle list with indexed element
             if isinstance(datum, (list,)) and self._xoperator.isnum(keyname):
                 keyname = int(keyname)
             return self._lookup(datum[keyname], '%s__eq' % op, value)
+        # handle list
+        if getattr(self._xoperator, op, None) and isinstance(datum, (list,)):
+            for item in datum:
+                res = self._lookup(item, key, value)
+                if res:
+                    break
+            return res
         return getattr(self._xoperator, op)(datum.get(keyname), value)
 
     def filter(self, *args, **kwargs):

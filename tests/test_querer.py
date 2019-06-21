@@ -63,6 +63,14 @@ def test_query_list_item(data):
     assert res.last()['firstname'] == 'david'
 
 
+def test_query_on_list(data):
+    qs = DictQuerer(data)
+    res = qs.filter(profiles__url__regex='^https://github\.com/.*(kwame).*')
+    assert res.count() == 1
+    res = qs.filter(profiles__url__regex='^https://github\.com/.*(kwame).*', profiles__username='loking')
+    assert res.count() == 0
+
+
 def test_query_orderby(data):
     qs = DictQuerer(data)
     res = qs.order_by('age')
