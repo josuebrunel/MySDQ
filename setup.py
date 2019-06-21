@@ -32,13 +32,13 @@ requirements = read('requirements.txt').splitlines() if os.path.isfile('requirem
 setup(
     name=name,
     version=version_git,
-    description="",
+    description="Simple Django queryset like dict querer",
     long_description=read("README.rst"),
     author=__author__,
     author_email=__email__,
     url=url,
     download_url=download_url,
-    keywords=[],
+    keywords=['dictquery', 'queryset', 'dict', 'query'],
     packages=find_packages(),
     classifiers=[
         'Programming Language :: Python',
