@@ -11,7 +11,7 @@ My Simple Dictionary Querer
 
 **MySDQ** is a simple and easy *dictionary querer* with an api close to the one of *Django QuerySet* 
 
-It is meant to be used just to quickly play around with some JONS/Dict data.
+It is meant to quickly play around with some JSON/Dict data.
 
 It supports all operator from the *operator module* (Yes even the ones that won't work).
 
@@ -57,7 +57,7 @@ Data used in here can be found in `here <tests/users.json>`_
      {'name': 'reddit',
       'url': 'https://reddit.com/yloking/',
       'username': 'yloking'}]}
-   # Querying non matching entry
+   # Querying non matching entry returns None
    In [9]: qs.get(lastname='young', age__le=20)
    # Querying an entry and requesting only 2 attributes
    In [11]: qs.filter(lastname='young', age__gt=20).values('nickname', 'age')
