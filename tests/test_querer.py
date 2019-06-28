@@ -88,11 +88,13 @@ def test_query_groupby(data):
 
 def test_query_values(data):
     qs = DictQuerer(data)
-    res = qs.filter(address__city='Pointe-Noire').values('nickname', 'age')
+    res = qs.filter(address__city='Pointe-Noire').values('nickname', 'age', 'address__num', 'profiles__1__url')
     assert len(res) == 2
     for item in res:
         assert item['age'] in (24, 32)
         assert item['nickname'] in ('dmccrey', 'kkwame')
+        assert item['address__num'] in (73, 118)
+        assert item['profiles__1__url'] in ['https://github.com/%s/' % nick for nick in ('kkwame', 'dmccrey')]
 
 
 def test_query_apply(data):

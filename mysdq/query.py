@@ -64,24 +64,26 @@ class DictQuerer(object):
     def __repr__(self):
         return '<%s: %s >' % (self.__class__.__name__, str(self))
 
-    def _lookup(self, datum, key, value):
+    def _lookup(self, datum, key, value, **kwargs):
         keyname, _, op = key.partition(self.DELIMITOR)
         if self.DELIMITOR in op:
             if self._xoperator.isnum(keyname):
                 keyname = int(keyname)
-            return self._lookup(datum[keyname], op, value)
+            return self._lookup(datum[keyname], op, value, **kwargs)
         if not getattr(self._xoperator, op, None):
             # handle list with indexed element
             if isinstance(datum, (list,)) and self._xoperator.isnum(keyname):
                 keyname = int(keyname)
-            return self._lookup(datum[keyname], '%s__eq' % op, value)
+            return self._lookup(datum[keyname], '%s__eq' % op, value, **kwargs)
         # handle list
         if getattr(self._xoperator, op, None) and isinstance(datum, (list,)):
             for item in datum:
-                res = self._lookup(item, key, value)
+                res = self._lookup(item, key, value, **kwargs)
                 if res:
                     break
             return res
+        if kwargs.get('get', False):
+            return datum.get(keyname)
         return getattr(self._xoperator, op)(datum.get(keyname), value)
 
     def filter(self, *args, **kwargs):
@@ -99,9 +101,8 @@ class DictQuerer(object):
         data = []
         for datum in self.dataset:
             cdata = {}
-            for key, value in datum.items():
-                if key in args:
-                    cdata[key] = value
+            for key in args:
+                cdata[key] = self._lookup(datum, key, datum.get(key, None), get=True)
             data.append(cdata)
         return data
 
