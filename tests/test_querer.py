@@ -107,6 +107,18 @@ def test_query_apply(data):
     assert qs.filter(address__country='France').count() == 7
 
 
+def test_query_transform(data):
+    qs = DictQuerer(data)
+
+    def discount_by_age(item):
+        item['discount_by_age'] = item['age'] * 0.1
+        return item
+
+    res = qs.transform(discount_by_age)
+    for item in res:
+        assert item['discount_by_age'] == item['age'] * 0.1
+
+
 def test_dictquerer_operator_in(data):
     qs = DictQuerer(data)
     res = qs.filter(age__in=[15, 24, 25])

@@ -112,6 +112,9 @@ class DictQuerer(object):
                 datum[key] = func(datum[key])
         return self
 
+    def transform(self, func=lambda x: x):
+        return map(func, self.dataset)
+
     def exists(self):
         return bool(len(self.dataset))
 
